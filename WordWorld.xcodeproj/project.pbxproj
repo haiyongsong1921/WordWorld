@@ -17,6 +17,7 @@
 		FC11FD911F8D853B009C857B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC11FD8F1F8D853B009C857B /* LaunchScreen.storyboard */; };
 		FC11FD9C1F8D853B009C857B /* WordWorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC11FD9B1F8D853B009C857B /* WordWorldTests.swift */; };
 		FC11FDA71F8D853B009C857B /* WordWorldUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC11FDA61F8D853B009C857B /* WordWorldUITests.swift */; };
+		FC3787751FBE5A2F00AAB899 /* words.db in Resources */ = {isa = PBXBuildFile; fileRef = FC0B65071FAA6F3E00C247DF /* words.db */; };
 		FC66BE4A1FB7DC4200A988B9 /* Words.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC66BE491FB7DC4100A988B9 /* Words.swift */; };
 /* End PBXBuildFile section */
 
@@ -406,6 +407,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC3787751FBE5A2F00AAB899 /* words.db in Resources */,
 				FC11FD911F8D853B009C857B /* LaunchScreen.storyboard in Resources */,
 				FC11FD8E1F8D853B009C857B /* Assets.xcassets in Resources */,
 				FC11FD8C1F8D853B009C857B /* Main.storyboard in Resources */,
@@ -713,7 +715,7 @@
 				FC11FDAA1F8D853B009C857B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		FC11FDAB1F8D853B009C857B /* Build configuration list for PBXNativeTarget "WordWorld" */ = {
 			isa = XCConfigurationList;
@@ -722,7 +724,7 @@
 				FC11FDAD1F8D853B009C857B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		FC11FDAE1F8D853B009C857B /* Build configuration list for PBXNativeTarget "WordWorldTests" */ = {
 			isa = XCConfigurationList;
@@ -731,7 +733,7 @@
 				FC11FDB01F8D853B009C857B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		FC11FDB11F8D853B009C857B /* Build configuration list for PBXNativeTarget "WordWorldUITests" */ = {
 			isa = XCConfigurationList;
@@ -740,7 +742,7 @@
 				FC11FDB31F8D853B009C857B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

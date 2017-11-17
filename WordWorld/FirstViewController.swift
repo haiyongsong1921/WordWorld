@@ -23,14 +23,14 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         ]
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       // return wordsDict.count
-        return name_links_tuples.count
+        return wordsDict.count
+      //  return name_links_tuples.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: nil)
 
  //       let title :String = wordsDict[indexPath.row].0
-        let title :String = name_links_tuples[indexPath.row].0
+        let title :String = wordsDict[indexPath.row].0
         cell.textLabel!.text = title
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
 
@@ -39,7 +39,23 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         do {
-            let db = try Connection("/Users/sunhaiyang/Documents/GitRepo/iosTest/WordWorld/WordWorld/words.db")
+//            let fileManager = FileManager.default
+//            let dbPath = fileManager.currentDirectoryPath
+            let fileManager = FileManager.default
+            let docPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first as! String
+            let destPath = docPath + "/words.db"
+            let sourceDbPath = Bundle.main.path(forResource: "words", ofType: "db")
+
+            do {
+                try fileManager.copyItem(atPath: sourceDbPath!, toPath: destPath)
+            }
+            catch  {
+                print("failed")
+            }
+
+        //    let db = try Connection("/Users/sunhaiyang/Documents/GitRepo/iosTest/WordWorld/WordWorld/words.db")
+            let db = try Connection(destPath)
+
             let word = Word()
             let wordList = Table("CET4WORDSTEST1")
             let id = Expression<Int64>("Id")
@@ -57,9 +73,9 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 print("english: \(word.engWord), chinese: \(word.chineseWord), level: \(word.level)")
             }
             tableView.dataSource = self
-     //       tableView.delegate = self
+            tableView.delegate = self
      //       self.view.addSubview(tableView)
-//            self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+            self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 
         } catch {
             print(error)
