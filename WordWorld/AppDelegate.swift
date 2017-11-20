@@ -16,6 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+//        let sourceDbPath = Bundle.main.path(forResource: "words", ofType: "db")
+//        print(sourceDbPath!)
+//        var documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first as! String
+//        let destinationPath = documentPath.append("wordsD.db") as! String
+//        print(destinationPath)
+//        FileManager().copyItem(atPath: sourceDbPath!, toPath: destinationPath)
+
         return true
     }
 
