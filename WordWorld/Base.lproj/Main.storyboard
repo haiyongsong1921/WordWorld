@@ -76,7 +76,13 @@
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7l0-iz-hub">
                                 <rect key="frame" x="16" y="277" width="343" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Save"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="39"/>
+                                <state key="normal" title="Save">
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="saveClick:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="Kjl-9k-8T5"/>
+                                </connections>
                             </button>
                             <pickerView contentMode="scaleToFill" misplaced="YES" id="PLI-02-T81">
                                 <rect key="frame" x="0.0" y="107" width="375" height="162"/>
@@ -91,7 +97,10 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Second" image="second" id="cPa-gy-q4n"/>
                     <connections>
+                        <outlet property="engTextfield" destination="zRX-cj-quP" id="NAb-nf-M2a"/>
+                        <outlet property="mandTextfield" destination="Qix-ot-AIz" id="m3I-Z6-RsH"/>
                         <outlet property="pickerView" destination="PLI-02-T81" id="8jm-an-PY2"/>
+                        <outlet property="saveButton" destination="7l0-iz-hub" id="Fck-ee-nec"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>

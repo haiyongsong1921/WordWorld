@@ -10,8 +10,14 @@ import UIKit
 
 class SecondViewController: UIViewController ,UIPickerViewDelegate, UIPickerViewDataSource{
     @IBOutlet weak var pickerView: UIPickerView!
+    @IBOutlet weak var engTextfield: UITextField!
+    @IBOutlet weak var mandTextfield: UITextField!
+    @IBOutlet weak var saveButton: UIButton!
     
-    
+    @IBAction func saveClick(_ sender: UIButton) {
+        var engWord = engTextfield.text
+        var mandWord = mandTextfield.text
+    }
     let wordCategory = ["CET4", "CET6", "考研"]
     let repeatInterval = ["One Week", "Two Ween", "Three Wee"]
     let difficultyLeve = ["Easy", "Normal", "Hard"]
@@ -45,6 +51,7 @@ class SecondViewController: UIViewController ,UIPickerViewDelegate, UIPickerView
             return ""
         }
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         pickerView.backgroundColor = UIColor.yellow
@@ -55,9 +62,14 @@ class SecondViewController: UIViewController ,UIPickerViewDelegate, UIPickerView
         pickerView.selectRow(3, inComponent: 2, animated: true)
     }
 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        engTextfield.resignFirstResponder()
+        mandTextfield.resignFirstResponder()
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        //
     }
 
 
