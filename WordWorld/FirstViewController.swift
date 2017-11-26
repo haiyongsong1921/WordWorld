@@ -31,6 +31,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         do {
+            /*
             let fileManager = FileManager.default
             let docPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! as String
             let destPath = docPath + "/words.db"
@@ -42,7 +43,9 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             catch  {
                 print("failed")
             }
-
+             */
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let destPath = appDelegate.dbPath! as String
             let db = try Connection(destPath)
             let word = Word()
             let wordList = Table("CET4WORDSTEST1")

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SQLite
 
 class SecondViewController: UIViewController ,UIPickerViewDelegate, UIPickerViewDataSource{
     @IBOutlet weak var pickerView: UIPickerView!
@@ -15,12 +16,25 @@ class SecondViewController: UIViewController ,UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var saveButton: UIButton!
     
     @IBAction func saveClick(_ sender: UIButton) {
-        var engWord = engTextfield.text
-        var mandWord = mandTextfield.text
+        let engWord = engTextfield.text
+        let mandWord = mandTextfield.text
+        let wordList = Table("CET4WORDSTEST1")
+        let english = Expression<String>("English")
+        let chinese = Expression<String>("Chinese")
+        let level = Expression<Int64>("Level")
+        let insert = wordList.insert(english <- engWord!, chinese <- mandWord!, level <- 4)
+        do {
+            let rowid = try dbConnection.run(insert)
+            print(rowid)
+        } catch {
+            print(error)
+        }
     }
     let wordCategory = ["CET4", "CET6", "考研"]
     let repeatInterval = ["One Week", "Two Ween", "Three Wee"]
     let difficultyLeve = ["Easy", "Normal", "Hard"]
+    var dbConnection: Connection!
+
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 3
     }
@@ -60,6 +74,14 @@ class SecondViewController: UIViewController ,UIPickerViewDelegate, UIPickerView
         pickerView.selectRow(1, inComponent: 0, animated: true)
         pickerView.selectRow(2, inComponent: 1, animated: true)
         pickerView.selectRow(3, inComponent: 2, animated: true)
+
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let destPath = appDelegate.dbPath! as String
+        do {
+            dbConnection = try Connection(destPath)
+        } catch {
+            print(error)
+        }
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
