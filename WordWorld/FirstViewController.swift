@@ -9,12 +9,17 @@
 import UIKit
 import SQLite
 
+protocol WordDetailDelegate {
+    func passWordInfo(wordInfo: Word)
+}
+
 class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
     @IBOutlet weak var tableView: UITableView!
     var wordsDict = [(String, Word)]()
     var refreshController: UIRefreshControl!
-
+    var detailViewController = WordDetailViewController()
+    var selectedWord: Word?
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return wordsDict.count
       //  return name_links_tuples.count
@@ -29,8 +34,22 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         return cell
     }
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let engWord = wordsDict[indexPath.row].0
+        let wordInfo = wordsDict[indexPath.row].1
+     //   let detailViewController = WordDetailViewController()
+    //    navigationController?.pushViewController(detailViewController, animated: true)
+        selectedWord = wordInfo
+        performSegue(withIdentifier: "segue", sender: self)
+    }
+
+    func passWordInfo(wordInfo: Word) {
+
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+ //       detailViewController.delegate = self as! WordDetailDelegate
         do {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let destPath = appDelegate.dbPath! as String
@@ -102,7 +121,11 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segue" {
+            let detailViewController = segue.destination as! WordDetailViewController
+            detailViewController.wordInfo = selectedWord
+        }
+    }
 }
 
