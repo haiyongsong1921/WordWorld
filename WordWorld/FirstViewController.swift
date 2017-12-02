@@ -9,25 +9,21 @@
 import UIKit
 import SQLite
 
-protocol WordDetailDelegate {
-    func passWordInfo(wordInfo: Word)
-}
-
 class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
     @IBOutlet weak var tableView: UITableView!
-    var wordsDict = [(String, Word)]()
+    var wordsArray = [(String, Word)]()//Dictionary<String, Word>()//[(String, Word)]()
     var refreshController: UIRefreshControl!
     var detailViewController = WordDetailViewController()
     var selectedWord: Word?
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return wordsDict.count
+        return wordsArray.count
       //  return name_links_tuples.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: nil)
-
-        let title :String = wordsDict[indexPath.row].0
+        let title :String = wordsArray[indexPath.row].0
+       // var unkonw = wordsArray[indexPath.row].popFirst()?.key
         cell.textLabel!.text = title
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
 
@@ -35,54 +31,26 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let engWord = wordsDict[indexPath.row].0
-        let wordInfo = wordsDict[indexPath.row].1
+       // let engWord = wordsDict[indexPath.row].0
+        let wordInfo = wordsArray[indexPath.row].1
      //   let detailViewController = WordDetailViewController()
     //    navigationController?.pushViewController(detailViewController, animated: true)
         selectedWord = wordInfo
         performSegue(withIdentifier: "segue", sender: self)
     }
 
-    func passWordInfo(wordInfo: Word) {
-
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
- //       detailViewController.delegate = self as! WordDetailDelegate
-        do {
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let destPath = appDelegate.dbPath! as String
-            let db = try Connection(destPath)
-            let word = Word()
-            let wordList = Table("CET4WORDSTEST1")
-            let id = Expression<Int64>("Id")
-            let english = Expression<String>("English")
-            let chinese = Expression<String>("Chinese")
-            let level = Expression<Int64>("Level")
+        loadDataFromBD()
 
-            for wordRow in try db.prepare(wordList) {
-//                print("english: \(wordRow[english]), chinese: \(wordRow[chinese]), level: \(wordRow[level])")
-            word.id = wordRow[id]
-            word.engWord = wordRow[english]
-            word.chineseWord = wordRow[chinese]
-            word.level = wordRow[level]
-            wordsDict.append((word.engWord, word))
-                print("english: \(word.engWord), chinese: \(word.chineseWord), level: \(word.level)")
-            }
+        tableView.dataSource = self
+        tableView.delegate = self
+        refreshController = UIRefreshControl()
+        refreshController.attributedTitle = NSAttributedString(string: "refresh new words")
+        tableView.addSubview(refreshController)
+        refreshController?.addTarget(self, action: #selector(pullRefresh), for: .valueChanged)
 
-            tableView.dataSource = self
-            tableView.delegate = self
-            refreshController = UIRefreshControl()
-            refreshController.attributedTitle = NSAttributedString(string: "refresh new words")
-            tableView.addSubview(refreshController)
-            refreshController?.addTarget(self, action: #selector(pullRefresh), for: .valueChanged)
-
-            self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-
-        } catch {
-            print(error)
-        }
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
 
     @objc func pullRefresh() {
@@ -93,11 +61,10 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     func loadDataFromBD() {
         do {
-            wordsDict.removeAll()
+            wordsArray.removeAll()
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let destPath = appDelegate.dbPath! as String
             let db = try Connection(destPath)
-            let word = Word()
             let wordList = Table("CET4WORDSTEST1")
             let id = Expression<Int64>("Id")
             let english = Expression<String>("English")
@@ -105,11 +72,12 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let level = Expression<Int64>("Level")
 
             for wordRow in try db.prepare(wordList) {
+                let word = Word()
                 word.id = wordRow[id]
                 word.engWord = wordRow[english]
                 word.chineseWord = wordRow[chinese]
                 word.level = wordRow[level]
-                wordsDict.append((word.engWord, word))
+                wordsArray.append((word.engWord, word))
                 print("english: \(word.engWord), chinese: \(word.chineseWord), level: \(word.level)")
                 }
         } catch {

@@ -10,7 +10,7 @@ import UIKit
 
 class WordDetailViewController: UIViewController {
     @IBOutlet weak var wordDetail: UILabel!
-    var delegate: WordDetailDelegate!
+
     var wordInfo: Word?
 
     override func viewDidLoad() {
