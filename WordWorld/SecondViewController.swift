@@ -15,14 +15,32 @@ class SecondViewController: UIViewController ,UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var mandTextfield: UITextField!
     @IBOutlet weak var saveButton: UIButton!
     
+    let wordCategory = ["CET4", "CET6", "考研"]
+    let repeatInterval = ["One Week", "Two Ween", "Three Wee"]
+    let difficultyLeve = ["Easy", "Normal", "Hard"]
+    var dbConnection: Connection!
+
     @IBAction func saveClick(_ sender: UIButton) {
-        let engWord = engTextfield.text
-        let mandWord = mandTextfield.text
+        let engWord = engTextfield.text?.trimmingCharacters(in: .whitespaces)
+        let mandWord = mandTextfield.text?.trimmingCharacters(in: .whitespaces)
+        saveToDB(engWord: engWord!, mandWord: mandWord!)
+    }
+
+
+    func saveToDB(engWord: String, mandWord: String){
         let wordList = Table("CET4WORDSTEST1")
         let english = Expression<String>("English")
         let chinese = Expression<String>("Chinese")
         let level = Expression<Int64>("Level")
-        let insert = wordList.insert(english <- engWord!, chinese <- mandWord!, level <- 4)
+
+        let insertWord = wordList.filter(english == engWord)
+        do {
+            try dbConnection.run(insertWord.delete())
+        } catch {
+            print(error)
+        }
+
+        let insert = wordList.insert(english <- engWord, chinese <- mandWord, level <- 4)
         do {
             let rowid = try dbConnection.run(insert)
             print(rowid)
@@ -30,14 +48,11 @@ class SecondViewController: UIViewController ,UIPickerViewDelegate, UIPickerView
             print(error)
         }
     }
-    let wordCategory = ["CET4", "CET6", "考研"]
-    let repeatInterval = ["One Week", "Two Ween", "Three Wee"]
-    let difficultyLeve = ["Easy", "Normal", "Hard"]
-    var dbConnection: Connection!
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 3
     }
+
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
     {
         switch component {
