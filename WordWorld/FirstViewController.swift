@@ -16,6 +16,8 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var refreshController: UIRefreshControl!
     var detailViewController = WordDetailViewController()
     var selectedWord: Word?
+    var wordList:Table?
+    var db: Connection?
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return wordsArray.count
       //  return name_links_tuples.count
@@ -39,6 +41,17 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         performSegue(withIdentifier: "segue", sender: self)
     }
 
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.delete)
+        {
+            let removeWord = wordsArray.remove(at: indexPath.row)
+            deleteDataFromDB(wordDeleteId: removeWord.1.id)
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         loadDataFromBD()
@@ -64,14 +77,14 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
             wordsArray.removeAll()
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let destPath = appDelegate.dbPath! as String
-            let db = try Connection(destPath)
-            let wordList = Table("CET4WORDSTEST1")
+            db = try Connection(destPath)
+            wordList = Table("CET4WORDSTEST1")
             let id = Expression<Int64>("Id")
             let english = Expression<String>("English")
             let chinese = Expression<String>("Chinese")
             let level = Expression<Int64>("Level")
 
-            for wordRow in try db.prepare(wordList) {
+            for wordRow in (try db?.prepare(wordList!))! {
                 let word = Word()
                 word.id = wordRow[id]
                 word.engWord = wordRow[english]
@@ -85,6 +98,16 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
 
+    func deleteDataFromDB(wordDeleteId: Int64) {
+    //    let english = Expression<String>("English")
+        let id = Expression<Int64>("Id")
+        let removeWord = wordList?.filter(id == wordDeleteId)
+        do {
+            try db!.run(removeWord!.delete())
+        } catch {
+            print(error)
+        }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
