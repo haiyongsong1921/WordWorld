@@ -26,7 +26,6 @@ class SecondViewController: UIViewController ,UIPickerViewDelegate, UIPickerView
         saveToDB(engWord: engWord!, mandWord: mandWord!)
     }
 
-
     func saveToDB(engWord: String, mandWord: String){
         let wordList = Table("CET4WORDSTEST1")
         let english = Expression<String>("English")

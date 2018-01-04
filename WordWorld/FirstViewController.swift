@@ -9,15 +9,46 @@
 import UIKit
 import SQLite
 
-class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+class FirstViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource{
 
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
+
     var wordsArray = [(String, Word)]()//Dictionary<String, Word>()//[(String, Word)]()
+    var wordsArrayForSearch = [(String, Word)]()
     var refreshController: UIRefreshControl!
     var detailViewController = WordDetailViewController()
     var selectedWord: Word?
     var wordList:Table?
     var db: Connection?
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let tempWordsArray = wordsArray
+        if searchText == "" {
+            wordsArray = wordsArrayForSearch
+        } else {
+            wordsArray = []
+            for word in tempWordsArray {
+                if word.0.lowercased().hasPrefix(searchText.lowercased()) {
+                    wordsArray.append(word)
+                }
+            }
+        }
+        tableView.reloadData()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        wordsArray = wordsArrayForSearch
+        searchBar.resignFirstResponder()
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        // 搜索内容置空
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+        tableView.reloadData()
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return wordsArray.count
       //  return name_links_tuples.count
@@ -58,6 +89,11 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         tableView.dataSource = self
         tableView.delegate = self
+
+        searchBar.delegate = self
+        searchBar.placeholder = "Search"
+        searchBar.showsCancelButton = true
+
         refreshController = UIRefreshControl()
         refreshController.attributedTitle = NSAttributedString(string: "refresh new words")
         tableView.addSubview(refreshController)
@@ -96,6 +132,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         } catch {
             print(error)
         }
+        wordsArrayForSearch = wordsArray
     }
 
     func deleteDataFromDB(wordDeleteId: Int64) {
