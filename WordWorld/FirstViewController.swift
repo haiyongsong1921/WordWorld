@@ -9,7 +9,7 @@
 import UIKit
 import SQLite
 
-class FirstViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource{
+class FirstViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, UITabBarControllerDelegate{
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
@@ -21,6 +21,15 @@ class FirstViewController: UIViewController, UISearchBarDelegate, UITableViewDel
     var selectedWord: Word?
     var wordList:Table?
     var db: Connection?
+
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        let buttonItem = item.tag
+        print(buttonItem)
+    }
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        let ints=23
+        print(ints)
+    }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let tempWordsArray = wordsArray
@@ -114,11 +123,11 @@ class FirstViewController: UIViewController, UISearchBarDelegate, UITableViewDel
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let destPath = appDelegate.dbPath! as String
             db = try Connection(destPath)
-            wordList = Table("CET4WORDSTEST1")
-            let id = Expression<Int64>("Id")
-            let english = Expression<String>("English")
-            let chinese = Expression<String>("Chinese")
-            let level = Expression<Int64>("Level")
+            wordList = Table("MasterWords")
+            let id = Expression<Int64>("id")
+            let english = Expression<String>("english")
+            let chinese = Expression<String>("mandarin")
+            let level = Expression<Int64>("difficulty")
 
             for wordRow in (try db?.prepare(wordList!))! {
                 let word = Word()

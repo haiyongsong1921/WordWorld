@@ -20,6 +20,8 @@
 		FC32113C1FCF7B86004271AA /* WordDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC32113B1FCF7B86004271AA /* WordDetailViewController.swift */; };
 		FC3787751FBE5A2F00AAB899 /* words.db in Resources */ = {isa = PBXBuildFile; fileRef = FC0B65071FAA6F3E00C247DF /* words.db */; };
 		FC66BE4A1FB7DC4200A988B9 /* Words.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC66BE491FB7DC4100A988B9 /* Words.swift */; };
+		FC95D2DB1FFEDB2500A1677D /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC95D2DA1FFEDB2500A1677D /* RootTabBarController.swift */; };
+		FC95D2E31FFEE11C00A1677D /* FirstViewNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC95D2E21FFEE11C00A1677D /* FirstViewNavigationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +130,8 @@
 		FC11FDA81F8D853B009C857B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FC32113B1FCF7B86004271AA /* WordDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordDetailViewController.swift; sourceTree = "<group>"; };
 		FC66BE491FB7DC4100A988B9 /* Words.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Words.swift; sourceTree = "<group>"; };
+		FC95D2DA1FFEDB2500A1677D /* RootTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabBarController.swift; sourceTree = "<group>"; };
+		FC95D2E21FFEE11C00A1677D /* FirstViewNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewNavigationController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +210,8 @@
 				FC66BE421FB7DBF300A988B9 /* Words */,
 				FC0B65071FAA6F3E00C247DF /* words.db */,
 				FC11FD841F8D853B009C857B /* AppDelegate.swift */,
+				FC95D2DA1FFEDB2500A1677D /* RootTabBarController.swift */,
+				FC95D2E21FFEE11C00A1677D /* FirstViewNavigationController.swift */,
 				FC11FD861F8D853B009C857B /* FirstViewController.swift */,
 				FC32113B1FCF7B86004271AA /* WordDetailViewController.swift */,
 				FC11FD881F8D853B009C857B /* SecondViewController.swift */,
@@ -439,10 +445,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC11FD891F8D853B009C857B /* SecondViewController.swift in Sources */,
+				FC95D2DB1FFEDB2500A1677D /* RootTabBarController.swift in Sources */,
 				FC32113C1FCF7B86004271AA /* WordDetailViewController.swift in Sources */,
 				FC66BE4A1FB7DC4200A988B9 /* Words.swift in Sources */,
 				FC11FD851F8D853B009C857B /* AppDelegate.swift in Sources */,
 				FC11FD871F8D853B009C857B /* FirstViewController.swift in Sources */,
+				FC95D2E31FFEE11C00A1677D /* FirstViewNavigationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

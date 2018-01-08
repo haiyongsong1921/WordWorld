@@ -27,10 +27,15 @@ class SecondViewController: UIViewController ,UIPickerViewDelegate, UIPickerView
     }
 
     func saveToDB(engWord: String, mandWord: String){
-        let wordList = Table("CET4WORDSTEST1")
-        let english = Expression<String>("English")
-        let chinese = Expression<String>("Chinese")
-        let level = Expression<Int64>("Level")
+        let wordList = Table("MasterWords")
+        let id = Expression<Int64>("id")
+        let english = Expression<String>("english")
+        let chinese = Expression<String>("mandarin")
+        let clause = Expression<String>("clause")
+        let reciteTimes = Expression<Int64>("reciteTimes")
+        let difficulty = Expression<Int64>("difficulty")
+        let createDate = Expression<Date>("createDate")
+//        let picture = Expression<Blob>("picture")
 
         let insertWord = wordList.filter(english == engWord)
         do {
@@ -39,7 +44,11 @@ class SecondViewController: UIViewController ,UIPickerViewDelegate, UIPickerView
             print(error)
         }
 
-        let insert = wordList.insert(english <- engWord, chinese <- mandWord, level <- 4)
+        //temp for db save
+        let tmpClause = "test clause"
+        let tmpReciteTimes = 1
+        let tmpCreateDate = Date(timeIntervalSince1970: 0)
+        let insert = wordList.insert(id <- 2, english <- engWord, chinese <- mandWord, clause <- tmpClause, reciteTimes <- Int64(tmpReciteTimes), createDate <- tmpCreateDate, difficulty <- 4)
         do {
             let rowid = try dbConnection.run(insert)
             print(rowid)
