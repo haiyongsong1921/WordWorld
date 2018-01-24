@@ -9,14 +9,21 @@
 import UIKit
 
 class RootTabBarController: UITabBarController, UITabBarControllerDelegate {
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
     }
 
+    @objc func pullRefresh(firstViewNavigationController: FirstViewNavigationController) {
+        firstViewNavigationController.refreshData()
+
+    }
+
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         if let firstViewNavigationController = viewController as? FirstViewNavigationController {
-            firstViewNavigationController.refreshData()
+            pullRefresh(firstViewNavigationController: firstViewNavigationController)
+//            firstViewNavigationController.refreshData()
         } else if viewController is SecondViewController {
             print("Second View")
         }

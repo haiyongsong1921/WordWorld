@@ -16,6 +16,12 @@ class FirstViewNavigationController: UINavigationController, UINavigationControl
 
     func refreshData() {
         let firstViewController = viewControllers.first as! FirstViewController
-        firstViewController.pullRefresh()
+    //    firstViewController.setupFresh()
+       // let offsetT = CGPoint(x: 0, y: -1.0*firstViewController.refreshController.frame.size.height)
+ /*       let offsetT = CGPoint(x: 0, y: 100)
+        firstViewController.tableView.setContentOffset(offsetT, animated: true)
+        firstViewController.refreshController.beginRefreshing()
+ */
+        firstViewController.refreshController.sendActions(for: .valueChanged)
     }
 }

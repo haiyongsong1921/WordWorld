@@ -94,6 +94,7 @@ class FirstViewController: UIViewController, UISearchBarDelegate, UITableViewDel
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+
         loadDataFromBD()
 
         tableView.dataSource = self
@@ -103,18 +104,21 @@ class FirstViewController: UIViewController, UISearchBarDelegate, UITableViewDel
         searchBar.placeholder = "Search"
         searchBar.showsCancelButton = true
 
-        refreshController = UIRefreshControl()
-        refreshController.attributedTitle = NSAttributedString(string: "refresh new words")
-        tableView.addSubview(refreshController)
-        refreshController?.addTarget(self, action: #selector(pullRefresh), for: .valueChanged)
+        self.setupFreshControl()
 
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
 
+    func setupFreshControl(){
+        refreshController = UIRefreshControl()
+        refreshController.attributedTitle = NSAttributedString(string: "refresh new words")
+        tableView.addSubview(refreshController)
+        refreshController?.addTarget(self, action: #selector(pullRefresh), for: .valueChanged)
+    }
     @objc func pullRefresh() {
         loadDataFromBD()
-        tableView.reloadData()
         refreshController?.endRefreshing()
+        tableView.reloadData()
     }
 
     func loadDataFromBD() {
@@ -142,6 +146,7 @@ class FirstViewController: UIViewController, UISearchBarDelegate, UITableViewDel
             print(error)
         }
         wordsArrayForSearch = wordsArray
+      //  refreshController?.endRefreshing()
     }
 
     func deleteDataFromDB(wordDeleteId: Int64) {
