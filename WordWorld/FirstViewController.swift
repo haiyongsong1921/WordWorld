@@ -132,6 +132,7 @@ class FirstViewController: UIViewController, UISearchBarDelegate, UITableViewDel
             let english = Expression<String>("english")
             let chinese = Expression<String>("mandarin")
             let level = Expression<Int64>("difficulty")
+            let sentence = Expression<String>("clause")
 
             for wordRow in (try db?.prepare(wordList!))! {
                 let word = Word()
@@ -139,6 +140,7 @@ class FirstViewController: UIViewController, UISearchBarDelegate, UITableViewDel
                 word.engWord = wordRow[english]
                 word.chineseWord = wordRow[chinese]
                 word.level = wordRow[level]
+                word.sentence = wordRow[sentence]
                 wordsArray.append((word.engWord, word))
                 print("english: \(word.engWord), chinese: \(word.chineseWord), level: \(word.level)")
                 }

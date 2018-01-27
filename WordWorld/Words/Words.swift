@@ -12,4 +12,5 @@ class Word {
     var engWord: String!
     var chineseWord: String!
     var level: Int64 = 0
+    var sentence: String!
 }

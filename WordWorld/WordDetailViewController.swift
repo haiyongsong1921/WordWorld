@@ -10,6 +10,7 @@ import UIKit
 
 class WordDetailViewController: UIViewController {
     @IBOutlet weak var wordDetail: UILabel!
+    @IBOutlet weak var examplesentence: UITextView!
 
     var wordInfo: Word?
 
@@ -17,6 +18,7 @@ class WordDetailViewController: UIViewController {
         super.viewDidLoad()
     //    wordInfo = delegate.passWordInfo(wordInfo: <#T##Word#>)
         wordDetail.text = wordInfo?.chineseWord
+        examplesentence.text = wordInfo?.sentence
         // Do any additional setup after loading the view.
     }
 
