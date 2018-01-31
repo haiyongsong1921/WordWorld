@@ -31,20 +31,21 @@ class SecondViewController: UIViewController ,UIPickerViewDelegate, UIPickerView
         let strInterval = repeatInterval[intervalIndex]
         let strLevel = difficultyLeve[levelIndex]
         let strSentence = sentence.text
-        saveToDB(engWord: engWord!, mandWord: mandWord!, category: strCategory,
-                 interval: intervalIndex, sentence: strSentence!)
+        saveToDB(engWord: engWord!, mandWord: mandWord!, strCategory: strCategory,
+                 interval: intervalIndex, sentence: strSentence!, intDifficulty: levelIndex)
     }
 
-    func saveToDB(engWord: String, mandWord: String, category: String,
-                  interval: Int, sentence: String){
-        let wordList = Table("MasterWords")
-        let id = Expression<Int64>("id")
+    func saveToDB(engWord: String, mandWord: String, strCategory: String,
+                  interval: Int, sentence: String, intDifficulty: Int){
+        let wordList = Table("WORDSPOOL")
+//        let id = Expression<Int64>("id")
         let english = Expression<String>("english")
         let chinese = Expression<String>("mandarin")
         let clause = Expression<String>("clause")
-        let reciteTimes = Expression<Int64>("reciteTimes")
+        let category = Expression<String>("category")
+ //       let reciteTimes = Expression<Int64>("reciteTimes")
         let difficulty = Expression<Int64>("difficulty")
-        let createDate = Expression<Date>("createDate")
+//        let createDate = Expression<Date>("createDate")
 //        let picture = Expression<Blob>("picture")
 
         let insertWord = wordList.filter(english == engWord)
@@ -55,9 +56,7 @@ class SecondViewController: UIViewController ,UIPickerViewDelegate, UIPickerView
         }
 
         //temp for db save
-        let tmpReciteTimes = 1
-        let tmpCreateDate = Date(timeIntervalSince1970: 0)
-        let insert = wordList.insert(id <- 2, english <- engWord, chinese <- mandWord, clause <- sentence, reciteTimes <- Int64(tmpReciteTimes), createDate <- tmpCreateDate, difficulty <- 4)
+        let insert = wordList.insert( english <- engWord, chinese <- mandWord, clause <- sentence, category <- strCategory, difficulty <- Int64(intDifficulty))
         do {
             let rowid = try dbConnection.run(insert)
             print(rowid)

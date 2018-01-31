@@ -127,12 +127,12 @@ class FirstViewController: UIViewController, UISearchBarDelegate, UITableViewDel
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let destPath = appDelegate.dbPath! as String
             db = try Connection(destPath)
-            wordList = Table("MasterWords")
-            let id = Expression<Int64>("id")
-            let english = Expression<String>("english")
-            let chinese = Expression<String>("mandarin")
-            let level = Expression<Int64>("difficulty")
-            let sentence = Expression<String>("clause")
+            wordList = Table("WORDSPOOL")
+            let id = Expression<Int64>("Id")
+            let english = Expression<String>("English")
+            let chinese = Expression<String>("Mandarin")
+            let level = Expression<Int64>("Difficulty")
+            let sentence = Expression<String>("Clause")
 
             for wordRow in (try db?.prepare(wordList!))! {
                 let word = Word()
