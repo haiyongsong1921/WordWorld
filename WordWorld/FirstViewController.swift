@@ -122,33 +122,11 @@ class FirstViewController: UIViewController, UISearchBarDelegate, UITableViewDel
     }
 
     func loadDataFromBD() {
-        do {
-            wordsArray.removeAll()
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let destPath = appDelegate.dbPath! as String
-            db = try Connection(destPath)
-            wordList = Table("WORDSPOOL")
-            let id = Expression<Int64>("Id")
-            let english = Expression<String>("English")
-            let chinese = Expression<String>("Mandarin")
-            let level = Expression<Int64>("Difficulty")
-            let sentence = Expression<String>("Clause")
-
-            for wordRow in (try db?.prepare(wordList!))! {
-                let word = Word()
-                word.id = wordRow[id]
-                word.engWord = wordRow[english]
-                word.chineseWord = wordRow[chinese]
-                word.level = wordRow[level]
-                word.sentence = wordRow[sentence]
-                wordsArray.append((word.engWord, word))
-                print("english: \(word.engWord), chinese: \(word.chineseWord), level: \(word.level)")
-                }
-        } catch {
-            print(error)
-        }
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let dbProvider = appDelegate.dbProvider! as DBProvider
+        
+        wordsArray = dbProvider.getWordsArray()
         wordsArrayForSearch = wordsArray
-      //  refreshController?.endRefreshing()
     }
 
     func deleteDataFromDB(wordDeleteId: Int64) {

@@ -13,21 +13,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var dbPath: String?
+    var dbProvider: DBProvider?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-        let fileManager = FileManager.default
-        let docPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! as String
-        let destPath = docPath + "/words.db"
-        let sourceDbPath = Bundle.main.path(forResource: "words", ofType: "db")
-        dbPath = destPath
-        do {
-            try fileManager.copyItem(atPath: sourceDbPath!, toPath: destPath)
-        }
-        catch  {
-            print("failed")
-        }
+        dbProvider = DBProvider()
 
         return true
     }
